@@ -11,3 +11,9 @@ export interface IUser {
   created_at: Date;
   updated_at: Date;
 }
+
+export interface IRegister {
+  name: string;
+  email: string;
+  password: string;
+}

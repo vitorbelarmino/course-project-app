@@ -5,9 +5,8 @@ import { FiLock } from 'react-icons/fi'
 import { ILogin } from '@/interface/IUser'
 import { ChangeEvent, useState } from 'react'
 import { loginSchema } from '@/schemas/loginSchemas'
-import { api } from '@/api'
 import { login } from '@/api/userApi'
-import { getCookie, setCookie } from 'cookies-next'
+import { Cookies } from '@/utils/cookies'
 
 export default function Home () {
   const [loginInfo, setLoginInfo] = useState({} as ILogin)
@@ -15,7 +14,6 @@ export default function Home () {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setLoginInfo({ ...loginInfo, [name]: value })
-    console.log(getCookie('course.token'))
   }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -25,11 +23,11 @@ export default function Home () {
       const token = await login(loginInfo.email, loginInfo.password)
 
       if (token) {
-        setCookie('course.token', token, {
-          expires: new Date(Date.now() + 86400000),
-          path: '/'
+        Cookies.set(token)
+        setLoginInfo({
+          email: '',
+          password: ''
         })
-        api.defaults.headers.Authorization = `Bearer ${token}`
       }
     } else {
       // error message from joi
@@ -46,12 +44,12 @@ export default function Home () {
           </p>
           <div className='flex items-center gap-2 border-b-2 border-gray-400 '>
             <MdOutlineEmail size="22" />
-            <input type="text" placeholder='E-mail' name="email" onChange={handleChange} className="p-1 focus:outline-none w-full"/>
+            <input type="text" placeholder='E-mail' name="email" value={loginInfo.email} onChange={handleChange} className="p-1 focus:outline-none w-full"/>
           </div>
 
           <div className='flex items-center gap-2 border-b-2 border-gray-400 '>
             <FiLock size="22" />
-            <input type="text" name="password" placeholder='Senha' onChange={handleChange} className="p-1 focus:outline-none w-full"/>
+            <input type="text" name="password" placeholder='Senha' value={loginInfo.password} onChange={handleChange} className="p-1 focus:outline-none w-full"/>
           </div>
 
           <button type="submit" className='bg-slate-400 w-full py-1 rounded'>
@@ -60,7 +58,7 @@ export default function Home () {
         </form>
         <div className='flex gap-1 pt-2'>
           <p className='text-sm'>Não possui uma conta? </p>
-          <a href="" className='text-sm text-blue-700'>Crie agora</a>
+          <a href="/register" className='text-sm text-blue-700'>Crie agora</a>
         </div>
       </div>
     </div>
