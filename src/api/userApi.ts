@@ -1,6 +1,7 @@
 import { IRegister } from '@/interface/IUser'
 import { api } from '.'
 import { AxiosError } from 'axios'
+import { toast } from 'react-toastify'
 
 export async function login (email: string, password: string): Promise<string | undefined> {
   try {
@@ -9,11 +10,11 @@ export async function login (email: string, password: string): Promise<string | 
   } catch (error) {
     if (error instanceof AxiosError) {
       if (error.response?.status === 401 || error.response?.status === 404) {
-        alert('Email ou senha inválidos')
+        toast.error('Email ou senha inválidos')
         return
       }
     }
-    alert('Error interno no servidor, aguarde alguns instantes e tente novamente')
+    toast.error('Error interno no servidor, aguarde alguns instantes e tente novamente')
   }
 }
 
@@ -25,10 +26,10 @@ export async function register (registerInfo: IRegister): Promise<string | undef
   } catch (error) {
     if (error instanceof AxiosError) {
       if (error.response?.status === 409) {
-        alert('Email já cadastrado')
+        toast.error('Email já cadastrado')
         return
       }
     }
-    alert('Error interno no servidor, aguarde alguns instantes e tente novamente')
+    toast.error('Error interno no servidor, aguarde alguns instantes e tente novamente')
   }
 }

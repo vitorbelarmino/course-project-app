@@ -7,9 +7,12 @@ import { ChangeEvent, useState } from 'react'
 import { FaRegUser } from 'react-icons/fa'
 import { FiLock } from 'react-icons/fi'
 import { MdOutlineEmail } from 'react-icons/md'
+import { ClipLoader } from 'react-spinners'
+import { toast } from 'react-toastify'
 
 export default function RegisterPage () {
   const [registerInfo, setRegisterInfo] = useState({} as IRegister)
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -20,8 +23,10 @@ export default function RegisterPage () {
     e.preventDefault()
     const { error } = registerSchema.validate(registerInfo)
     if (!error) {
+      setIsLoading(true)
       const token = await register(registerInfo)
       if (!token) {
+        setIsLoading(false)
         return
       }
 
@@ -31,8 +36,10 @@ export default function RegisterPage () {
         email: '',
         password: ''
       } as IRegister)
+      setIsLoading(false)
     } else {
-      alert(error.message)
+      setIsLoading(false)
+      toast.error(error.message)
     }
   }
   return (
@@ -57,8 +64,9 @@ export default function RegisterPage () {
           <input type="text" name='password' placeholder='Senha' value={registerInfo.password} onChange={handleChange} className="p-1 focus:outline-none w-full"/>
         </div>
 
-        <button type='submit' className='bg-slate-400 w-full py-1 rounded'>
-          Cadastrar
+        <button type='submit' disabled={isLoading} className='bg-slate-400 w-full py-1 rounded'>{
+          isLoading ? <ClipLoader color='#fff' size={20} /> : 'Cadastrar'
+        }
         </button>
       </form>
     </div>

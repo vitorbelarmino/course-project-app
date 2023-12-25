@@ -7,9 +7,12 @@ import { ChangeEvent, useState } from 'react'
 import { loginSchema } from '@/schemas/loginSchemas'
 import { login } from '@/api/userApi'
 import { Cookies } from '@/utils/cookies'
+import { toast } from 'react-toastify'
+import { ClipLoader } from 'react-spinners'
 
 export default function LoginPage () {
   const [loginInfo, setLoginInfo] = useState({} as ILogin)
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -19,7 +22,9 @@ export default function LoginPage () {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const { error } = loginSchema.validate(loginInfo)
+
     if (!error) {
+      setIsLoading(true)
       const token = await login(loginInfo.email, loginInfo.password)
 
       if (token) {
@@ -28,10 +33,15 @@ export default function LoginPage () {
           email: '',
           password: ''
         })
+        setIsLoading(false)
+        toast.success('Login realizado com sucesso')
+      } else {
+        setIsLoading(false)
       }
     } else {
+      setIsLoading(false)
       // error message from joi
-      alert(error.message)
+      toast.error(error.message)
     }
   }
 
@@ -52,8 +62,12 @@ export default function LoginPage () {
             <input type="text" name="password" placeholder='Senha' value={loginInfo.password} onChange={handleChange} className="p-1 focus:outline-none w-full"/>
           </div>
 
-          <button type="submit" className='bg-slate-400 w-full py-1 rounded'>
-          Entrar
+          <button type="submit" disabled={isLoading} className='bg-slate-400 w-full py-1 rounded'>
+            {isLoading
+              ? (
+                <ClipLoader size={20} color="#fff" />
+              )
+              : 'Entrar' }
           </button>
         </form>
         <div className='flex gap-1 pt-2'>
