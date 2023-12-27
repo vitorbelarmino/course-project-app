@@ -4,6 +4,7 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import './globals.css'
 import AuthProvider from '@/context/AuthContext'
+import CourseProvider from '@/context/CourseContext'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -20,10 +21,13 @@ export default function RootLayout ({
   return (
     <html lang="en">
       <AuthProvider>
-        <body className={inter.className}>
-          <ToastContainer hideProgressBar={true} autoClose={2500} />
-          {children}
-        </body>
+        <CourseProvider>
+
+          <body className={inter.className}>
+            <ToastContainer hideProgressBar={true} autoClose={2500} />
+            {children}
+          </body>
+        </CourseProvider>
       </AuthProvider>
     </html>
   )
