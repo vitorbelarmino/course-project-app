@@ -53,6 +53,7 @@ export default function CoursePage ({ params } : {params: {id: string}}) {
                 : (
                   <>
                     <iframe src={'https://www.youtube.com/embed/hdex1hj1dmk?si=DeG9R0V326KJlGZy'} className='w-full h-full' />
+                    <p className='text-xs text-red-600'>Video meramente ilustrativo</p>
                     <div className='pl-2 pt-2'>
                       <p className='text-2xl'>
                         {lessonCurrent?.name}
