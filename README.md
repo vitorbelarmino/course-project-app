@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Chat Play For a Cause
 
-## Getting Started
+## 💻 Projeto
+  Um projeto que simula uma platafoma de cursos online, onde é possivel realizar cadastro e login, filtar cursos pela barra de pesquisa e por categoria, acesar o curso e suas aulas. Desenvolvido de forma FullStack, o projeto abrange o repositório do back-end, acessível ao clicar [aqui](https://github.com/vitorbelarmino/course-project-service).
+</br>
 
-First, run the development server:
+## 🚀 Tecnologias
+
+Esse projeto foi desenvolvido com as seguintes tecnologias:
+
+-  **[React](https://react.dev/)**
+-  **[Next.js](https://nextjs.org/)**
+-  **[TypeScript](https://www.typescriptlang.org/)**
+-  **[Tailwind](https://tailwindcss.com/)**
+-  **[Zod](https://zod.dev/)**
+-  **[Axios](https://axios-http.com/ptbr/)**
+-  **[Eslint](https://eslint.org/)**
+-  **[WebSocket](https://developer.mozilla.org/pt-BR/docs/Web/API/WebSockets_API/)**
+</br>
+
+## 📌 Implementações
+Cadastro:
+
+Possibilita o registro de novos usuários, que são automaticamente autenticados ao finalizar o cadastro e redirecionados para a página de cursos.
+- Login: Ao realizar o login, um token de autenticação é gerado e armazenado nos cookies. Esse token é utilizado para verificar se o usuário está logado e para realizar outras requisições ao backend, permitindo a recuperação das informações do usuário.
+- Middleware de Validação: Implementa um middleware de validação para impedir que usuários acessem rotas não autorizadas sem estar logados. A escolha por esse middleware ocorre porque ele realiza a validação antes do acesso à página, evitando acesso não autorizado.
+- Navegação pelos Cursos: Na página principal da aplicação, todos os cursos estão disponíveis, permitindo que os usuários filtrem os cursos por categoria ou diretamente pela barra de pesquisa.
+- Acesso às Aulas: Ao selecionar um curso, os usuários são direcionados para as aulas, que podem ser apresentadas em formato de vídeo ou texto.
+
+## ⬇️ Como executar o projeto
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Clone este repositório
+$ git clone git@github.com:vitorbelarmino/course-project-app.git
+
+# Acesse a pasta do projeto no terminal/cmd
+$ cd course-project-app
+
+# Instale as dependências
+$ npm install
+
+# Execute a aplicação
+$ npm run dev
+
+# O App inciará na porta:3000 - acesse http://localhost:3000 
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+> Github: https://github.com/vitorbelarmino
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+> Linkedin: https://www.linkedin.com/in/vitor-belarmino/
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+> Email: vitor.belarmino@hotmail.com
