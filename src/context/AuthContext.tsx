@@ -21,6 +21,7 @@ export default function AuthProvider ({ children }: { children: React.ReactNode 
       if (!user) return
       setUser(user)
     }).catch((error) => {
+      logout()
       console.error(error)
     })
   }
