@@ -3,6 +3,7 @@ import { register } from '@/api/userApi'
 import { IRegister } from '@/interface/IUser'
 import { registerSchema } from '@/schemas/registerSchema'
 import { Cookies } from '@/utils/cookies'
+import { useRouter } from 'next/navigation'
 import { ChangeEvent, useState } from 'react'
 import { FaRegUser } from 'react-icons/fa'
 import { FiLock } from 'react-icons/fi'
@@ -13,6 +14,7 @@ import { toast } from 'react-toastify'
 export default function RegisterPage () {
   const [registerInfo, setRegisterInfo] = useState({} as IRegister)
   const [isLoading, setIsLoading] = useState(false)
+  const route = useRouter()
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -37,6 +39,7 @@ export default function RegisterPage () {
         password: ''
       } as IRegister)
       setIsLoading(false)
+      route.push('/')
     } else {
       setIsLoading(false)
       toast.error(error.message)
