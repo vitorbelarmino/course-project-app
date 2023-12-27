@@ -1,7 +1,8 @@
-import { IRegister } from '@/interface/IUser'
+import { IRegister, IUser } from '@/interface/IUser'
 import { api } from '.'
 import { AxiosError } from 'axios'
 import { toast } from 'react-toastify'
+import { Cookies } from '@/utils/cookies'
 
 export async function login (email: string, password: string): Promise<string | undefined> {
   try {
@@ -31,5 +32,22 @@ export async function register (registerInfo: IRegister): Promise<string | undef
       }
     }
     toast.error('Error interno no servidor, aguarde alguns instantes e tente novamente')
+  }
+}
+export async function Claim (): Promise<IUser | undefined> {
+  try {
+    const token = Cookies.get()
+    if (!token) return
+    api.defaults.headers.authorization = token
+    const { data } = await api.get('/claims')
+    return data
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      if (error.response?.status === 401 || error.response?.status === 404) {
+        Cookies.delete()
+        return
+      }
+    }
+    console.error(error)
   }
 }
