@@ -11,3 +11,9 @@
 body {
   color: rgb(var(--foreground-rgb));
 }
+
+
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}

@@ -9,10 +9,12 @@ import { login } from '@/api/userApi'
 import { Cookies } from '@/utils/cookies'
 import { toast } from 'react-toastify'
 import { ClipLoader } from 'react-spinners'
+import { useRouter } from 'next/navigation'
 
 export default function LoginPage () {
   const [loginInfo, setLoginInfo] = useState({} as ILogin)
   const [isLoading, setIsLoading] = useState(false)
+  const router = useRouter()
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -34,7 +36,7 @@ export default function LoginPage () {
           password: ''
         })
         setIsLoading(false)
-        toast.success('Login realizado com sucesso')
+        router.push('/')
       } else {
         setIsLoading(false)
       }
