@@ -18,7 +18,7 @@ import { courseContext } from '@/context/CourseContext'
 export function Header () {
   const [categories, setCategories] = useState<ICategory[] | undefined>(undefined)
   const [search, setSearch] = useState<string>('')
-  const { user } = Auth()
+  const { user, logout } = Auth()
   const { filterCoursesByCategory, filterCoursesBySearch, resetFilter } = courseContext()
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -54,7 +54,7 @@ export function Header () {
         <div className='border p-2 border-black rounded-full'>
           <FaRegUser size="20"/>
         </div>
-        <p className='text-sm font-semibold py-1 px-2 border rounded-md bg-red-600 text-white cursor-pointer'>sair</p>
+        <p onClick={logout} className='text-sm font-semibold py-1 px-2 border rounded-md bg-red-600 text-white cursor-pointer'>sair</p>
       </div>
     </div>
   )

@@ -1,11 +1,13 @@
 'use client'
 import { Claim } from '@/api/userApi'
 import { IUser } from '@/interface/IUser'
+import { Cookies } from '@/utils/cookies'
 import { createContext, useContext, useEffect, useState } from 'react'
 
 type AuthContextType = {
   user: IUser | undefined
   claim: () => void
+  logout: () => void
 }
 
 export const AuthContext = createContext({} as AuthContextType)
@@ -22,11 +24,15 @@ export default function AuthProvider ({ children }: { children: React.ReactNode 
       console.error(error)
     })
   }
+  const logout = () => {
+    Cookies.delete()
+    window.location.reload()
+  }
   useEffect(() => {
     claim()
   }, [])
   return (
-    <AuthContext.Provider value={{ user, claim }}>
+    <AuthContext.Provider value={{ user, claim, logout }}>
       {children}
     </AuthContext.Provider>
   )

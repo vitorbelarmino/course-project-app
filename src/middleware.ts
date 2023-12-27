@@ -4,9 +4,10 @@ import type { NextRequest } from 'next/server'
 export function middleware (request: NextRequest) {
   const token = request.cookies.get('course.token')?.value
   const currentRoute = request.nextUrl.pathname
+  const freePaths = ['/login', '/register']
 
   // caso o usuário não esteja logado, sera redirecionado para a pagina de login
-  if (!token && currentRoute === '/') {
+  if (!token && !freePaths.includes(currentRoute)) {
     return NextResponse.redirect(new URL('/login', request.url))
   }
 
